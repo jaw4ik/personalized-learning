@@ -14,15 +14,19 @@
                     var align = $self.attr('align');
                     $wrapper.css('float', align);
                 });
+                
                 $("img", element).each(function () {
-                    var $self = $(this);
-                    $self.wrap('<div class="image-wrapper">');
+                    var $self = $(this),
+                        $wrapper = $('<div class="image-wrapper">').css('float', $self.css('float'));
+
+                    if ($self.closest('.cropped-image').length > 0) {
+                        return;
+                    }
+
+                    $self.wrap($wrapper);
                     $self.height('auto');
-                    var $wrapper = $self.parent();
-                    var float = $self.css('float');
-                    $wrapper.css('float', float);
                 });
-              
+
             }
         }
     }

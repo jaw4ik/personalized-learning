@@ -25,7 +25,6 @@ define(['durandal/composition','knockout'], function (composition, ko) {
 						});
                         break;
                     default:
-                        $element.css('overflow-x', 'auto');
                         $element.html(html);
                         return ko.bindingHandlers.wrapElements.init(element, valueAccessor);
                 }
