@@ -58,5 +58,12 @@
     "[scenario has been submitted]": "Scenario er innsendt",
     "[scenario has not been finished yet]": "Scenario er ikke fullført ennå. Du må fullføre før innsending.",
     "[scenario has been passed successfully]": "Scenario er korrekt fullført.",
-    "[scenario has not been passed successfully]": "Scenario er IKKE korrekt gjennomført."
+    "[scenario has not been passed successfully]": "Scenario er IKKE korrekt gjennomført.",
+    "[the owner of the course has limited the access]": "The owner of the course has limited the access",
+    "[back to sign in]": "Back to sign in",
+    "[login explanation]": "* By authorizing with any of the options above you agree to the fact that your results and scores will be stored. These results will only be visible to the organizer (author) of your course.",
+    "[login skip]": "Skip step, start anonymously",
+    "[confirn your name and email]": "OK, name and email are correct",
+    "[login header]": "Introduce yourself",
+    "[survey mode caption]": "The answer will not have any impact on your progress"
 }

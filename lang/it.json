@@ -58,5 +58,12 @@
     "[scenario has been submitted]": "Scenario è stato inviato",
     "[scenario has not been finished yet]": "Scenario non è stato ancora finito. Bisogna finirlo prima di inviarlo.",
     "[scenario has been passed successfully]": "Scenario è stato superato con successo",
-    "[scenario has not been passed successfully]": "Scenario NON è stato superato con successo"
+    "[scenario has not been passed successfully]": "Scenario NON è stato superato con successo",
+    "[the owner of the course has limited the access]": "The owner of the course has limited the access",
+    "[back to sign in]": "Back to sign in",
+    "[login explanation]": "* By authorizing with any of the options above you agree to the fact that your results and scores will be stored. These results will only be visible to the organizer (author) of your course.",
+    "[login skip]": "Skip step, start anonymously",
+    "[confirn your name and email]": "OK, name and email are correct",
+    "[login header]": "Introduce yourself",
+    "[survey mode caption]": "The answer will not have any impact on your progress"
 }

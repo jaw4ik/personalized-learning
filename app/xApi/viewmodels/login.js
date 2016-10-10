@@ -26,6 +26,7 @@
 
             return value;
         })(),
+        account: null,
         showError: ko.observable(false),
         reportRequired: templateSettings.xApi.required,
 
@@ -42,6 +43,7 @@
         if (user) {
             viewModel.username(user.username);
             viewModel.email(user.email);
+            viewModel.account = user.account;
             viewModel.showError(true);
         }
     }
@@ -55,19 +57,23 @@
     }
 
     function report() {
-        if (viewModel.username.isValid() && viewModel.email.isValid()) {
+        if (viewModel.username.isValid() && (viewModel.email.isValid() || viewModel.account)) {
 
             settingsModule.settings.actor.name = viewModel.username();
             settingsModule.settings.actor.email = viewModel.email();
+            settingsModule.settings.actor.account = viewModel.account;
 
             initializer.initialize().then(function () {
                 return eventManager.courseStarted();
             }).then(function () {
-                app.trigger('xApi:authenticated',
-                {
+                var user = {
                     username:viewModel.username(),
-                    email:viewModel.email()
-                });
+                    email:viewModel.email() || viewModel.account.name
+                };
+                if(viewModel.account) {
+                    user.account = viewModel.account;
+                }
+                app.trigger('xApi:authenticated', user);
             });
         } else {
             viewModel.showError(true);

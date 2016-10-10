@@ -39,13 +39,13 @@
         sessionId = null;
         return activityProvider;
 
-        function initialize(courseId, actorName, actorEmail, activityName, activityUrl, attemptId) {
+        function initialize(courseId, actorName, actorEmail, actorAccount, activityName, activityUrl, attemptId) {
             rootCourseUrl = activityUrl != undefined ? activityUrl.split("?")[0].split("#")[0] : '';
             sessionId = progressContext.get().attemptId;
 
 
             // TODO: Check if undefined activity url is possible
-            activityProvider.actor = createActor(actorName, actorEmail);
+            activityProvider.actor = createActor(actorName, actorEmail, actorAccount);
             activityProvider.activityName = activityName;
             activityProvider.activityUrl = activityUrl;
             activityProvider.courseId = courseId;
@@ -70,10 +70,11 @@
             }
         }
 
-        function createActor(name, email) {
+        function createActor(name, email, account) {
             var actor = new ActorModel({
                 name: name,
-                mbox: 'mailto:' + email
+                mbox: 'mailto:' + email,
+                account: account
             });
 
             return actor;
@@ -202,12 +203,16 @@
             var parts = getQuestionParts(data, section);
 
             var parentUrl = rootCourseUrl + '#sections?section_id=' + section.id;
-
-            var context = createContext({
-                contextActivities: new ContextActivitiesModel({
-                    parent: [createActivity(parentUrl, section.title)]
-                })
+            
+            var contextObj = {};
+            contextObj.contextActivities = new ContextActivitiesModel({
+                parent: [createActivity(parentUrl, section.title)]
             });
+            contextObj.extensions = {};
+            contextObj.extensions["http://easygenerator/expapi/question/survey"] = data.question.hasOwnProperty('isSurvey') && data.question.isSurvey;
+            contextObj.extensions["http://easygenerator/expapi/question/type"] = data.question.type;
+
+            var context = createContext(contextObj);
 
             if (parts) {
                 var statement = createStatement(verbs.answered, parts.result, parts.object, context);
@@ -259,7 +264,7 @@
                     definition: new InteractionDefinitionModel({
                         name: new LanguageMapModel(question.title),
                         interactionType: interactionTypes.choice,
-                        correctResponsesPattern: [
+                        correctResponsesPattern: !!question.isSurvey ? [] : [
                             _.chain(question.answers)
                             .filter(function (item) {
                                 return item.isCorrect;
@@ -283,16 +288,18 @@
             return {
                 result: new ResultModel({
                     score: new ScoreModel(question.score / 100),
-                    response: _.map(answer, function (statement) {
+                    response: _.chain(answer).filter(function (statement) {
+                        return !_.isNull(statement.state) && !_.isUndefined(statement.state);
+                    }).map(function (statement) {
                         return statement.id + '[.]' + statement.state;
-                    }).join("[,]")
+                    }).value().join("[,]")
                 }),
                 object: new ActivityModel({
                     id: rootCourseUrl + '#section/' + section.id + '/question/' + question.id,
                     definition: new InteractionDefinitionModel({
                         name: new LanguageMapModel(question.title),
                         interactionType: interactionTypes.choice,
-                        correctResponsesPattern: [
+                        correctResponsesPattern: !!question.isSurvey ? [] : [
                             _.map(question.answers, function (item) {
                                 return item.id + '[.]' + item.isCorrect;
                             }).join("[,]")

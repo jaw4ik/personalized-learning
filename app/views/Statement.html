@@ -1,11 +1,12 @@
 ﻿<section>
-
     <!-- ko if: content -->
     <div class="question-content">
         <div class="styled-content" data-bind="html: content, wrapElements: content"></div>
     </div>
     <!-- /ko -->
-
+    <!-- ko if: isSurveyMode -->
+    <div class="text-matching-caption" data-translate-text="[survey mode caption]"></div>
+    <!-- /ko -->
     <ul class="statement">
         <li class="statement-headers-group">
             <div class="statement-header statement-option" data-translate-text="[statement question true text]">TRUE</div>
@@ -27,6 +28,5 @@
 
         </li>
         <!-- /ko -->
-
     </ul>
 </section>

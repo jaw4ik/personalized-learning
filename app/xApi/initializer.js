@@ -8,7 +8,7 @@ define(['entities/course', './activityProvider', './configuration/settings', './
 
         return initializer;
 
-        function initialize(username, email) {
+        function initialize(username, email, account) {
 
             return Q.fcall(function () {
                 var pageUrl = "";
@@ -22,9 +22,12 @@ define(['entities/course', './activityProvider', './configuration/settings', './
                 var title = course.title;
                 var actor = settingsModule.settings.actor;
 
-                if (username && email) {
+                if (username && (email || account)) {
                     actor.name = username;
-                    actor.email = email;
+                    actor.email = email || account.name;
+                    if(account) {
+                        actor.account = account;
+                    }
                 }
                 if (actor.name.length && actor.email.length) {
 
@@ -32,7 +35,7 @@ define(['entities/course', './activityProvider', './configuration/settings', './
                     settingsModule.initialize(templateSettings.xApi);
                     statementsQueueHandler.handle();
 
-                    activityProvider.initialize(course.id, actor.name, actor.email, title, url);
+                    activityProvider.initialize(course.id, actor.name, actor.email, actor.account, title, url);
                 }
             });
         }

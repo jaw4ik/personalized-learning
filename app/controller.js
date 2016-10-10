@@ -1,4 +1,5 @@
-﻿define(['durandal/app', 'durandal/activator', 'knockout', 'loader', 'templateSettings', 'entities/course', 'userContext', 'xApi/initializer', 'eventManager', 'progressContext', 'constants'], function (app, activator, ko, loader, templateSettings, course, userContext, xApiInitializer, eventManager, progressContext, constants) {
+﻿define(['durandal/app', 'durandal/activator', 'knockout', 'loader', 'templateSettings', 'entities/course', 'userContext', 'xApi/initializer', 'eventManager', 'progressContext', 'constants', 'limitAccess/accessLimiter'],
+function (app, activator, ko, loader, templateSettings, course, userContext, xApiInitializer, eventManager, progressContext, constants, accessLimiter) {
 
     "use strict";
 
@@ -28,13 +29,14 @@
     }
 
     controller.inProgress = ko.observable(false);
+    controller.authenticationSkipped = false;
 
     return controller;
 
     function activate() {
-
-        app.on('xApi:authenticated').then(loadModuleAndActivate);
-        app.on('xApi:authentication-skipped').then(loadModuleAndActivate);
+        app.on('user:authenticated').then(loadModuleAndActivate);
+        app.on('user:navigatedToLogin').then(navigateToLogin);
+        app.on('user:authentication-skipped').then(authenticationSkipped);
         app.on('introduction:completed').then(loadModuleAndActivate).then(viewChanged);
         app.on('preassessment:completed').then(loadModuleAndActivate).then(viewChanged);;
         app.on('studying:completed').then(loadModuleAndActivate).then(viewChanged);
@@ -43,51 +45,71 @@
         if (course.content) {
             self.lifecycle.unshift('introduction/viewmodels/index');
         }
-        if (templateSettings.xApi && templateSettings.xApi.enabled) {
-            var user;
-            if (_.isFunction(userContext.getCurrentUser)) {
-                user  = userContext.getCurrentUser();
-            }
-            if (user && user.username && constants.patterns.email.test(user.email)) {
+
+        var user = userContext.getCurrentUser(),
+            xApiEnabled = templateSettings.xApi && templateSettings.xApi.enabled;
+
+        if (xApiEnabled || accessLimiter.accessLimitationEnabled()) {
+            if (user && user.username && (constants.patterns.email.test(user.email) || user.account)) {
                 if (_.isObject(progress) && progress.url && progress.user.username === user.username && progress.user.email === user.email) {
-                    if (_.isObject(progress.url)) {
-                        self.lifecycle = ['studying/viewmodels/index', 'summary/viewmodels/index'];
-                    }
-                    var index = _.indexOf(self.lifecycle, progress.url) + 1;
-                    self.lifecycle = _.rest(self.lifecycle, index);
+                    setLifecycle(progress.url);
                 }
                 else {
-                    return xApiInitializer.initialize(user.username, user.email).then(function () {
-                        return eventManager.courseStarted();
-                    }).then(function () {
-                        return loadModuleAndActivate();
-                    });
+                    if (xApiEnabled) {
+                        return xApiInitializer.initialize(user.username, user.email, user.account).then(function() {
+                            return eventManager.courseStarted();
+                        }).then(function() {
+                            return loadModuleAndActivate();
+                        });
+                    }
+
+                    return loadModuleAndActivate();
                 }
             }
             if (_.isObject(progress.user)) {
-                xApiInitializer.initialize(progress.user.username, progress.user.email);
+                setupProgressUser(progress);
+                if (xApiEnabled) {
+                    xApiInitializer.initialize(progress.user.username, progress.user.email, progress.user.account);
+                }
             }
             else {
-                self.lifecycle.unshift('xApi/viewmodels/login');
+                self.lifecycle.unshift('login/login');
             }
         }
-        if (_.isObject(progress) && progress.url) {
-            if (_.isObject(progress.url)) {
-                self.lifecycle = ['studying/viewmodels/index', 'summary/viewmodels/index'];
-            }
-            var index = _.indexOf(self.lifecycle, progress.url) + 1;
-            self.lifecycle = _.rest(self.lifecycle, index);
-        }
-        return loadModuleAndActivate();
 
+        if (_.isObject(progress) && progress.url) {
+            setLifecycle(progress.url);
+        }
+
+        return loadModuleAndActivate();
+    }
+
+    function setupProgressUser(progress) {
+        if (_.isObject(progress) && progress.user) {
+            userContext.user.email = progress.user.email;
+            userContext.user.username = progress.user.username;
+        }
+    }
+
+    function setLifecycle(progressUrl) {
+        if (_.isObject(progressUrl)) {
+            self.lifecycle = ['studying/viewmodels/index', 'summary/viewmodels/index'];
+        }
+        var index = _.indexOf(self.lifecycle, progressUrl) + 1;
+        self.lifecycle = _.rest(self.lifecycle, index);
     }
 
     function loadModuleAndActivate() {
-
+        var user = userContext.getCurrentUser();
         controller.activeItem.isComposing(true);
 
-        var path = self.lifecycle.shift();
+        if (accessLimiter.accessLimitationEnabled() && ((controller.authenticationSkipped && !user) || (user && !accessLimiter.userHasAccess(user)))) {
+            return loader.loadModule('limitAccess/noAccess').then(function (module) {
+                controller.activeItem(module);
+            });
+        }
 
+        var path = self.lifecycle.shift();
         var progress = progressContext.get();
         controller.activeItem.activationData.call(null, _.isObject(progress.url) ? _.values(progress.url) : progress.url);
 
@@ -107,6 +129,17 @@
 
     function stoppedReading() {
         app.trigger('view:changed', 'preassessment/viewmodels/index');
+    }
+
+    function navigateToLogin() {
+        controller.authenticationSkipped = false;
+        self.lifecycle.unshift('login/login');
+        return loadModuleAndActivate();
+    }
+
+    function authenticationSkipped() {
+        controller.authenticationSkipped = true;
+        return loadModuleAndActivate();
     }
 
 });

@@ -58,5 +58,12 @@
     "[scenario has been submitted]": "O cenário foi submetido",
     "[scenario has not been finished yet]": "O cenário ainda não foi concluído. Você deve concluí-lo antes de submeter.",
     "[scenario has been passed successfully]": "O cenário foi aprovado com êxito",
-    "[scenario has not been passed successfully]": "O cenário NÃO foi aprovado com êxito"
+    "[scenario has not been passed successfully]": "O cenário NÃO foi aprovado com êxito",
+    "[the owner of the course has limited the access]": "O proprietário do curso limitou o acesso",
+    "[back to sign in]": "Voltar para fazer login",
+    "[login explanation]": "* Autorizando com qualquer uma das opções indicadas acima, você concorda com o fato de que seus resultados e pontuações serão armazenados. Esses resultados estarão visíveis somente para o organizador (autor) de seu curso.",
+    "[login skip]": "Pular passo, iniciar anonimamente",
+    "[confirn your name and email]": "Ok, nome e e-mail corretos",
+    "[login header]": "Apresente-se",
+    "[survey mode caption]": "A resposta não afetará seu progresso"
 }

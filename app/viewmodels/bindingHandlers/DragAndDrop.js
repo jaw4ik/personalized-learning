@@ -46,6 +46,7 @@
                 var scope = ko.unwrap(allBindings.scope) || 'question';
                 var $element = $(element);
 
+				$element.css('touch-action','none');
                 $element.draggable({
                     scope: scope,
                     revert: 'invalid',

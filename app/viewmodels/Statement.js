@@ -12,12 +12,12 @@
                 var isChecked = false,
                     state = null;
                 if (!_.isNull(statement.isChecked) && !_.isUndefined(statement.isChecked)) {
-                isChecked = statement.isChecked;
-                state = statement.isChecked;
-                that.isAnswered(true);
-                that.isAnsweredCorrectly(question.score == 100);
-            }
-            return {
+                    isChecked = statement.isChecked;
+                    state = statement.isChecked;
+                    that.isAnswered(true);
+                    that.isAnsweredCorrectly(question.score == 100);
+                }
+                return {
                     id: statement.id,
                     text: statement.text,
                     isChecked: ko.observable(isChecked),

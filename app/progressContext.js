@@ -81,6 +81,9 @@
                     username: user.username,
                     email: user.email
                 }
+                if(user.account) {
+                    self.progress.user.account = user.account;
+                }
                 self.progress.answers = {};
             }
         }
@@ -90,8 +93,8 @@
             }
         }
         eventManager.subscribeForEvent(eventManager.events.questionAnswered).then(questionAnswered);
-        app.on('xApi:authenticated').then(authenticated);
-        app.on('xApi:authentication-skipped').then(authenticationSkipped);
+        app.on('user:authenticated').then(authenticated);
+        app.on('user:authentication-skipped').then(authenticationSkipped);
         app.on('view:changed').then(save);
         app.on('course:finished').then(remove);
         app.on('progress:error').then(showStorageError);

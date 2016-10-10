@@ -49,3 +49,84 @@
     font-family: 'twcenmt';
     src: url('./font/twcenmt-condensed.woff') format('woff'), url('./font/twcenmt-condensed.ttf') format('truetype'), url('./font/twcenmt-condensed#rtwcenmt-condensed.') format('svg');
 }
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/MaterialIcons-Regular.woff); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(MaterialIcons-Regular.woff) format('woff'),
+}
+@font-face {
+    font-family: 'Custom Icons';
+    font-weight: normal;
+    font-style: normal;
+    src: url(./font/Custom-Icons.woff) format('woff');
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'Custom Icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-attention:before {
+    content: "\e900";
+}
+.icon-home:before {
+    content: "\e901";
+}
+.icon-envelope:before {
+    content: "\e910";
+}
+.icon-lock:before {
+    content: "\e90f";
+}
+.icon-link:before {
+    content: "\e90a";
+}
+.icon-all_devices:before {
+    content: "\e906";
+}
+.icon-user:before {
+    content: "\e905";
+}
+.icon-email:before {
+    content: "\e90e";
+}
+.icon-no_connection:before {
+    content: "\e907";
+}
+.icon-password:before {
+    content: "\e908";
+}
+.icon-linkedin:before {
+    content: "\e909";
+}
+.icon-google:before {
+    content: "\e902";
+}
+.icon-facebook:before {
+    content: "\e903";
+}
+.icon-twitter:before {
+    content: "\e904";
+}
+.icon-google2:before {
+    content: "\e90b";
+}
+.icon-facebook2:before {
+    content: "\e90c";
+}
+.icon-linkedin2:before {
+    content: "\e90d";
+}

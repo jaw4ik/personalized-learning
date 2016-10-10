@@ -7,10 +7,18 @@
 
         ObjectEntity.call(this, spec);
 
-        guard.throwIfNotMbox(spec.mbox, 'You should provide mbox identity for Actor');
-
+        if(spec.account) {
+            guard.throwIfNotString(spec.account.homePage, 'You should provide homePage for Actor account');
+            guard.throwIfNotString(spec.account.name, 'You should provide name for Actor account');
+            this.account = {
+                homePage: spec.account.homePage,
+                name: spec.account.name
+            };
+        } else {
+            guard.throwIfNotMbox(spec.mbox, 'You should provide mbox identity for Actor');
+            this.mbox = spec.mbox;
+        }
         this.name = spec.name;
-        this.mbox = spec.mbox;
     }
 
     return Actor;

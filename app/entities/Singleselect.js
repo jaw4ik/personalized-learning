@@ -1,6 +1,6 @@
 ﻿define(['_', 'entities/Question'], function (_, Question) {
 
-    var ctor = function (id, title, type, answers) {
+    var ctor = function (id, title, type, isSurvey, answers) {
         var that = this,
             _protected = {
                 answer: answer,
@@ -8,7 +8,7 @@
                 getProgress: getProgress
             };
 
-        Question.call(that, id, title, type, _protected);
+        Question.call(that, id, title, type, _protected, isSurvey);
 
         that.answers = answers;
         var checkedAnswers = null;

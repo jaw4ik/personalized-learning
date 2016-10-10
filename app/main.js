@@ -13,8 +13,9 @@ define('jquery', function() { return window.jQuery; });
 define('Q', function() { return window.Q; });
 define('_', function() { return window._; });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'queryStringParameters', 'dataContext', 'userContext', 'bootstrapper', 'Q', 'modulesInitializer', 'templateSettings', 'settingsReader', 'translation'],
-    function(system, app, viewLocator, queryStringParameters, dataContext, userContext, bootstrapper, Q, modulesInitializer, templateSettings, settingsReader, translation) {
+define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'queryStringParameters', 'dataContext', 'userContext', 'bootstrapper', 'Q', 'modulesInitializer', 'templateSettings',
+    'settingsReader', 'translation', 'limitAccess/accessLimiter'],
+    function (system, app, viewLocator, queryStringParameters, dataContext, userContext, bootstrapper, Q, modulesInitializer, templateSettings, settingsReader, translation, accessLimiter) {
         app.title = '';
         app.start().then(function() {
             bootstrapper.run();
@@ -45,10 +46,16 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'queryStringP
             });
 
             function readPublishSettings() {
-                return settingsReader.readPublishSettings().then(function(settings) {
-                    _.each(settings.modules, function(module) {
+                return settingsReader.readPublishSettings().then(function (settings) {
+                    var hasLmsModule = false;
+                    _.each(settings.modules, function (module) {
                         modules['../includedModules/' + module.name] = true;
+                        if (module.name === 'lms') {
+                            hasLmsModule = true;
+                        }
                     });
+
+                    accessLimiter.initialize(settings.accessLimitation, hasLmsModule);
 
                     initProgressTracking(settings);
                 });

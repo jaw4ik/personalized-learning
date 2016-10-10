@@ -1,9 +1,11 @@
 ﻿<section>
-  
     <!-- ko if: content -->
     <div class="question-content">
         <div class="styled-content" data-bind="html: content, wrapElements: content"></div>
     </div>
+    <!-- /ko -->
+    <!-- ko if: isSurveyMode -->
+    <div class="text-matching-caption" data-translate-text="[survey mode caption]"></div>
     <!-- /ko -->
     <div>
         <ul class="unstyled">
@@ -18,6 +20,5 @@
             </li>
             <!-- /ko -->
         </ul>
-
     </div>
 </section>

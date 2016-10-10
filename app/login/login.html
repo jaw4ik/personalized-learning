@@ -1,15 +1,11 @@
 ﻿<section class="view xApi-login">
     <header class="view-header"></header>
 
-    <form class="container" data-bind="submit: report">
+    <form class="container" data-bind="submit: login">
         <div class="content">
-            <div class="form-caption" data-translate-text="[tracking and tracing header]">
-                Your credentials for progress tracking
-            </div>
-           
+            <div class="form-caption" data-translate-text="[login header]"></div>
             <div class="form-row" data-bind="css: { error: !username.isValid() && showError() }">
                 <div class="form-control-wrapper">
-
                     <input class="form-control" type="text" data-bind="value: username, valueUpdate: 'afterkeydown', css: { empty: !username() }, event: { blur: username.trim }" />
                     <div class="placeholder">
                         <span data-translate-text="[tracking and tracing name field]"></span>
@@ -29,19 +25,17 @@
             <div class="form-submit">
                 <label class="form-label"></label>
                 <div class="form-control-wrapper">
-                    <button type="submit" class="button success emphasize" data-bind="click: report">
+                    <button type="submit" class="button success emphasize" data-bind="click: login">
                         <div class="xapi-start-text-wrapper">
-                            <span class="xapi-start-text" data-translate-text="[tracking and tracing start]">Start and report my progress</span>
+                            <span class="xapi-start-text" data-translate-text="[confirn your name and email]" data-translate-title="[confirn your name and email]"></span>
                         </div>
                     </button>
                     <!-- ko ifnot: reportRequired -->
-                    <button type="button" class="button do-not-report-button unstyled" data-bind="click: justStart"><span class="button-text" data-translate-text="[tracking and tracing skip reporting]">Do not report, just start</span></button>
+                    <button type="button" class="button do-not-report-button unstyled"  data-translate-title="[login skip]" data-bind="click: justStart"><span class="button-text" data-translate-text="[login skip]"></span></button>
                     <!-- /ko -->
                 </div>
             </div>
-            <div class="xapi-start-agreement" data-translate-text="[tracking and tracing hint]">
-                * By clicking the button Start and report my progress you agree to the fact that your results and scores will be stored. These results will only be visible to the organizer (author) of your course.
-            </div>
+            <footer class="xapi-start-agreement" data-translate-text="[login explanation]"></footer>
         </div>
 
     </form>

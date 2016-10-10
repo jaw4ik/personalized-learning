@@ -7,13 +7,22 @@
         this.questions = [];
 
         this.score = function () {
+            var questionsThatAffectTheProgress = 0;
             var sum = _.reduce(this.questions, function (memo, question) {
+                if(!question.affectProgress){
+                    return memo;
+                }
+                questionsThatAffectTheProgress++;
                 if (question.score == 100) {
                     return memo + question.score;
-                } else return memo;
-
+                }
+                return memo;
             }, 0);
-            return Math.ceil(sum / this.questions.length);
+            
+            if(questionsThatAffectTheProgress === 0){
+                return 100;
+            }
+            return Math.ceil(sum / questionsThatAffectTheProgress);
         };
 
         this.isCompleted = function () {

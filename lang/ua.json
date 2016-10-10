@@ -58,5 +58,12 @@
     "[scenario has been submitted]": "Відповідь на питання \"Сценарій\" прийнята",
     "[scenario has not been finished yet]": "Ви не закінчили відповідати на питання \"Сценарій\". Пройдіть питання до кінця і настисніть \"Відповісти\".",
     "[scenario has been passed successfully]": "Питання \"Сценарій\" пройдене успішно",
-    "[scenario has not been passed successfully]": "Питання \"Сценарій\" не пройдене"
+    "[scenario has not been passed successfully]": "Питання \"Сценарій\" не пройдене",
+    "[the owner of the course has limited the access]": "Автор обмежив доступ до курсу",
+    "[back to sign in]": "Назад",
+    "[login explanation]": "* Авторизуючись будь яким з вище наданих кроків ви погоджуєтесь з тим що ваші результати будуть збереженні. Ці результати будуть показані лише автору цього курса.",
+    "[login skip]": "Пропустити цей крок, почати анонімно",
+    "[confirn your name and email]": "ОК, ім'я та електорнна адреса коректні",
+    "[login header]": "Представтеся",
+    "[survey mode caption]": "Відповідь на це питання не вплине на ваш прогрес"
 }

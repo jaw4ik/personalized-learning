@@ -6,7 +6,7 @@
 
         this.isAnswered = ko.observable(false);
         this.isAnsweredCorrectly = ko.observable(false);
-       
+        this.isSurveyMode = question.hasOwnProperty('isSurvey') && question.isSurvey;
         this.learningContent = ko.observableArray([]);
         this.learningContent.load = function () {
             var that = this;

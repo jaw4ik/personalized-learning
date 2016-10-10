@@ -58,5 +58,12 @@
     "[scenario has been submitted]": "Szenario wurde gesendet",
     "[scenario has not been finished yet]": "Das Szenario wurde noch nicht abgeschlossen. Sie müssen es abschließen, bevor Sie es senden können.",
     "[scenario has been passed successfully]": "Szenario wurde bestanden",
-    "[scenario has not been passed successfully]": "Szenario wurde NICHT bestanden"
+    "[scenario has not been passed successfully]": "Szenario wurde NICHT bestanden",
+    "[the owner of the course has limited the access]": "Der Besitzer des Kurses hat den Zugriff beschränkt",
+    "[back to sign in]": "Zurück zur Anmeldung",
+    "[login explanation]": "* Indem Sie mithilfe einer der obigen Optionen die Autorisierung erteilen, willigen Sie ein, dass Ihre Ergebnisse und Punktzahlen gespeichert werden. Diese Ergebnisse sind nur für den Organisator (Verfasser) Ihres Kurses sichtbar.",
+    "[login skip]": "Schritt überspringen, anonym beginnen",
+    "[confirn your name and email]": "OK, Name und E-Mail sind korrekt",
+    "[login header]": "Sich selbst vorstellen",
+    "[survey mode caption]": "Die Antwort wirkt sich nicht auf Ihren Fortschritt aus"
 }

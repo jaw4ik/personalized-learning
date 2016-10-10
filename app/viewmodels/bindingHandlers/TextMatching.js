@@ -11,7 +11,8 @@
                 var
                     allBindings = allBindingsAccessor()
                 ;
-
+				
+				$(element).css('touch-action','none');
                 $(element).draggable({
                     appendTo: '.application',
                     containment: 'body',

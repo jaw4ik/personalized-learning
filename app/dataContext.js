@@ -47,7 +47,7 @@
                          var question;
                          switch (dq.type) {
                              case constants.questionTypes.multipleSelect:
-                                 question = new Multipleselect(dq.id, dq.title, dq.type, dq.answers);
+                                 question = new Multipleselect(dq.id, dq.title, dq.type, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.fillInTheBlank:
                                  var answers = [];
@@ -69,7 +69,7 @@
                                  question = new DragAndDrop(dq.id, dq.title, dq.type, dq.background, dq.dropspots);
                                  break;
                              case constants.questionTypes.singleSelectText:
-                                 question = new Singleselect(dq.id, dq.title, dq.type, dq.answers);
+                                 question = new Singleselect(dq.id, dq.title, dq.type, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.singleSelectImage:
                                  question = new SingleselectImage(dq.id, dq.title, dq.type, dq.answers, dq.correctAnswerId);
@@ -78,7 +78,7 @@
                                  question = new TextMatching(dq.id, dq.title, dq.type, dq.answers, dq.correctAnswerId);
                                  break;
                              case constants.questionTypes.statement:
-                                 question = new Statement(dq.id, dq.title, dq.type, dq.answers);
+                                 question = new Statement(dq.id, dq.title, dq.type, dq.isSurvey, dq.answers);
                                  break;
                              case constants.questionTypes.hotspot:
                                  question = new Hotspot(dq.id, dq.title, dq.type, dq.isMultiple, dq.background, dq.spots);
